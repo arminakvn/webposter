@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>first</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+
+<body>
+  <section id="main">
+    <div class="poster" id="first">
+    </div>
+  </section>
+  <script>
+    function xx() {
+      const STYLE = getComputedStyle(document.documentElement);
+      const width = parseFloat(STYLE.getPropertyValue('--width-blocks'));
+      const height = parseFloat(STYLE.getPropertyValue('--height-blocks'));
+      const posterSize = parseFloat(STYLE.getPropertyValue('--poster-size'));
+      const gridCount = parseFloat(STYLE.getPropertyValue('--grid-count'));
+      const wNorm = parseFloat(STYLE.getPropertyValue('--width-norm'));
+      const hNorm = parseFloat(STYLE.getPropertyValue('--height-norm'));
+
+      let t = '',
+          h = '',
+          w = '';
+      const wRatios = [0.02, 0.029, 0.038, 0.045, 0.064, 0.07, 0.086, 0.096, 0.14, 0.096, 0.086, 0.07, 0.064, 0.045, 0.038, 0.029, 0.02];
+      const hRatios = [0.029, 0.038, 0.045, 0.064, 0.07, 0.086, 0.096, 0.14, 0.096, 0.086, 0.07, 0.064, 0.045, 0.038, 0.029];
+      // const wRatios = [1, 2, 3, 2, 1]
+      // const hRatios = [1, 2, 1]
+      let hT = 0,
+          wT = 0;
+      for (let i =0 ; i < hRatios.length ; i++) {
+        hT += hRatios[i];
+      }
+      for (let i =0 ; i < wRatios.length ; i++) {
+        wT += wRatios[i];
+      }
+      for (let i = 0 ; i < width * height ; i++) {
+          if (i % 2 == 0) {
+              t += '<div class="block black"></div>';
+          } else {
+            t += '<div class="block white"></div>';
+          }
+      }
+
+
+      let poster = document.querySelector('#first');
+      for (let i = 0 ; i < gridCount ; i++) {
+        poster.innerHTML += `<div class="grid" id="grid-${i}">${t}</div>`;
+      }
+
+      for (let i = 0 ; i < height ; i++ ) {
+        h += `${(hRatios[i] * ((hNorm * posterSize) / gridCount)) / hT}px `;
+      }
+      for (let i = 0 ; i < width ; i++ ) {
+        w += `${(wRatios[i] * (wNorm * posterSize)) / wT}px `;
+      }
+
+      let grids = document.querySelectorAll('.grid');
+      console.log(grids)
+
+      for (let j = 0 ; j < grids.length ; j++) {
+        grids[j].style.gridTemplateRows = h;
+        grids[j].style.gridTemplateColumns = w;
+      }
+
+    }
+
+    (() => {
+      xx()
+    })()
+  </script>
+</body>
+</html>
