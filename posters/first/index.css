@@ -1,10 +1,11 @@
 :root {
-  --poster-size: 1500px;
-  --width-norm: 0.2816;
+  --poster-size: 400px;
+  --width-norm: 0.5816;
   --width-blocks: 17;
   --height-norm: 0.5557;
   --height-blocks: 15;
-  --grid-count: 3;
+  --grid-height: 3;
+  --grid-width: 1;
 }
 
 html, body {
@@ -23,7 +24,6 @@ html, body {
     flex-flow: column nowrap;
     margin: 0 30px;
     position: relative;
-    background-color: white;
     justify-content: center;
     align-items: center;
 }
@@ -31,13 +31,25 @@ html, body {
 .poster {
   height: 100%;
 }
+
 #first {
-  width:  calc(var(--width-norm) * var(--poster-size));
-  height:  calc(var(--height-norm) * var(--poster-size));
-  background-color: red;
+  width:  calc(var(--grid-width) * var(--width-norm) * var(--poster-size));
+  height:  calc(var(--grid-height) * var(--height-norm) * var(--poster-size));
+  display: grid;
+  grid-template-columns: repeat(var(--grid-width), auto);
+  grid-template-rows: repeat(var(--grid-height), auto);
+}
+
+@keyframes DepthTranslate {
+  0%   { transform: perspective(var(--poster-size)) translateZ(0px); }
+  100% { transform: perspective(var(--poster-size)) translateZ(+20px); }
 }
 
 .grid {
+  animation: DepthTranslate 20s infinite;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-fill-mode: both;
   display: grid;
   width: 100%;
   height: calc(100% / var(--grid-count));

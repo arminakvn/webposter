@@ -19,6 +19,8 @@
       const height = parseFloat(STYLE.getPropertyValue('--height-blocks'));
       const posterSize = parseFloat(STYLE.getPropertyValue('--poster-size'));
       const gridCount = parseFloat(STYLE.getPropertyValue('--grid-count'));
+      const gridWidth = parseFloat(STYLE.getPropertyValue('--grid-width'));
+      const gridHeight = parseFloat(STYLE.getPropertyValue('--grid-height'));
       const wNorm = parseFloat(STYLE.getPropertyValue('--width-norm'));
       const hNorm = parseFloat(STYLE.getPropertyValue('--height-norm'));
 
@@ -47,12 +49,12 @@
 
 
       let poster = document.querySelector('#first');
-      for (let i = 0 ; i < gridCount ; i++) {
+      for (let i = 0 ; i < gridHeight * gridWidth ; i++) {
         poster.innerHTML += `<div class="grid" id="grid-${i}">${t}</div>`;
       }
 
       for (let i = 0 ; i < height ; i++ ) {
-        h += `${(hRatios[i] * ((hNorm * posterSize) / gridCount)) / hT}px `;
+        h += `${(hRatios[i] * ((hNorm * posterSize))) / hT}px `;
       }
       for (let i = 0 ; i < width ; i++ ) {
         w += `${(wRatios[i] * (wNorm * posterSize)) / wT}px `;
